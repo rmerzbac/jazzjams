@@ -1,0 +1,77 @@
+import React, { useState, useEffect, FormEvent, ChangeEventHandler } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate
+} from "react-router-dom";
+import {Data, NewData} from "./interfaces";
+
+export default function Listing() {
+  const [data, setData] = useState<NewData[]>([]);
+
+  const handleFetch = async () => {
+    try {
+      const response = await fetch('/jams', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error(data);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const jsonData = await response.json();
+      console.log(jsonData);
+      setData(jsonData);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
+  const parseTime = (timeString: string) => {
+    const [hour, minute, second] = timeString.split(':');
+    const date = new Date();
+    date.setHours(parseInt(hour, 10));
+    date.setMinutes(parseInt(minute, 10));
+    date.setSeconds(parseInt(second, 10));
+    return date;
+  }
+
+  return (
+    <div>
+      <div className="button"><Link to="/create">ADD NEW SESSION</Link></div>
+      <ul>
+        {data.map((item, index) => (
+          <li key={index}>
+            <h4 className="session-name">{item.name} <Link to={`/edit/${item.id}`}><i className='fa fa-edit'></i></Link></h4>
+            <p>{item.days}</p>
+            <p>Time: {parseTime(item.start_time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + (item.end_time ? " - " + parseTime(item.end_time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '')}</p>
+            <p>{item.location}</p>
+            <p>{item.info ? item.info : ''}</p>
+            <p>{item.website ? item.website : ''}</p>
+            <iframe
+              width="400"
+              height="225"
+              style={{border:0}}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDFVjn6rhF5ELFHPGbxn_PYvxCDZmulV7Q&q=${item.name} ${item.location}`}>
+            </iframe>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

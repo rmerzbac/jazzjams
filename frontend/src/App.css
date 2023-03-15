@@ -1,0 +1,72 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h4 {
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+iframe {
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+}
+
+input {
+  margin-right: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  border: 2px solid #b0b0b0;
+  padding: 30px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.button {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+}
+
+.button a:link, a:visited {
+  background-color: white;
+  color: #f55142;
+  border: 2px solid #f55142;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button a:hover, a:active {
+  background-color: #f55142;
+  color: white;
+}
+
+#error {
+  font-weight: bold;
+  color: red;
+}
+
+.session-name {
+  font-weight: bold;
+}
