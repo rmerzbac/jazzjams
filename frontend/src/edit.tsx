@@ -8,9 +8,65 @@ import {
   useParams
 } from "react-router-dom";
 
-import {Data, NewData} from './interfaces';
+import { Data } from './interfaces';
 
 export default function EditForm() {
+  const navigate = useNavigate();
+  const id = useParams().id;
+
+  const [data, setData] = useState<Data>();
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
+  const handleFetch = async () => {
+    try {
+      const response = await fetch(`/jams/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error(data);
+        alert("Jam not found");
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const jsonData = await response.json();
+      console.log(jsonData);
+      setData(jsonData);
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+      navigate("/");
+    }
+  };
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      name: data?.name ?? '',
+      sun: data?.sun ?? false,
+      mon: data?.mon ?? false,
+      tue: data?.tue ?? false,
+      wed: data?.wed ?? false,
+      thu: data?.thu ?? false,
+      fri: data?.fri ?? false,
+      sat: data?.sat ?? false,
+      custom: data?.custom ?? '',
+      start_time: data?.start_time ?? '',
+      end_time: data?.end_time ?? undefined,
+      location: data?.location ?? '',
+      information: data?.information ?? '',
+      website: data?.website ?? '',
+    });
+  }, [data]);
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -23,10 +79,11 @@ export default function EditForm() {
     sat: false,
     custom: '',
     start_time: '',
-    end_time: undefined,
+    end_time: undefined as string | undefined,
     location: '',
-    info: '',
-    website: ''
+    information: '',
+    website: '',
+    reason: ''
   });
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -39,47 +96,21 @@ export default function EditForm() {
     }
   };
 
-  const transformData = (data: Data) => {
-    let days = "";
-    if (data.sun) days += "Sun";
-    if (data.mon) days += "Mon";
-    if (data.tue) days += "Tue";
-    if (data.wed) days += "Wed";
-    if (data.thu) days += "Thu";
-    if (data.fri) days += "Fri";
-    if (data.sat) days += "Sat";
-    if (data.custom) days += ", " + data.custom;
-
-    const newData: NewData = {
-      name: data.name,
-      days: days,
-      start_time: data.start_time,
-      end_time: data.end_time || null,
-      location: data.location,
-      info: data.info,
-      website: data.website,
-    };
-
-    console.log(newData.end_time);
-
-    return newData;
-  };
-
-  const navigate = useNavigate();
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    //data!.end_time = data?.end_time == "" ? undefined : data?.end_time;
+
     try {
-      const response = await fetch('/jams', {
-        method: 'POST',
+      const response = await fetch(`/jams/${id}?reason=${encodeURIComponent(formData.reason)}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(transformData(formData))
+        body: JSON.stringify(formData)
       });
 
-      console.log(JSON.stringify(transformData(formData)));
+      console.log(JSON.stringify(formData));
 
       if (!response.ok) {
         const data = await response.json();
@@ -106,7 +137,7 @@ export default function EditForm() {
       const data = await response.json();
       console.log(data);
 
-      navigate('/edit');
+      navigate('/');
 
     } catch (error) {
       console.error(error);
@@ -117,7 +148,7 @@ export default function EditForm() {
     <div>
       <div className="button"><Link to="/">BACK TO LISTINGS</Link></div>
       <form onSubmit={handleSubmit}>
-        <h4>Edit session <Link to={`/delete/${useParams().id}`}><i className='fa fa-trash-o'></i></Link></h4>
+        <h4>Edit "{data ? data.name : ''}" <Link to={`/delete/${useParams().id}`}><i className='fa fa-trash-o'></i></Link></h4>
         <label htmlFor="name">Session name:</label>
         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required /><br />
 
@@ -146,11 +177,14 @@ export default function EditForm() {
         <label htmlFor="location">Location:</label>
         <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required /><br/>
 
-        <label htmlFor="info">Information:</label>
-        <input type="text" id="info" name="info" /><br/>
+        <label htmlFor="information">Information:</label>
+        <input type="text" id="information" name="information" value={formData.information} onChange={handleChange} /><br/>
 
         <label htmlFor="website">Website:</label>
-        <input type="text" id="website" name="website" /><br/>
+        <input type="text" id="website" name="website" value={formData.website} onChange={handleChange} /><br/>
+
+        <label htmlFor="reason">Reason for edit:</label>
+        <input type="text" id="reason" name="reason" value={formData.reason} onChange={handleChange} required /><br />
 
         <input type="submit" />
         <p id="error"></p>

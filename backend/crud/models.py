@@ -10,27 +10,22 @@ class Jam(Base):
 
     id = Column(String, primary_key=True, index=True)
     name = Column(String, index=True)
-    days = Column(String)
+    sun = Column(Boolean)
+    mon = Column(Boolean)
+    tue = Column(Boolean)
+    wed = Column(Boolean)
+    thu = Column(Boolean)
+    fri = Column(Boolean)
+    sat = Column(Boolean)
+    custom = Column(String)
     start_time = Column(Time)
     end_time = Column(Time)
     location = Column(String)
-    info = Column(String)
+    information = Column(String)
     website = Column(String)
     is_active = Column(Boolean, default=True)
-
-    edits = relationship("Edit", back_populates="owner")
+    edit_reason = Column(String)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.id = str(uuid4())
-
-class Edit(Base):
-    __tablename__ = "edits"
-
-    id = Column(Integer, primary_key=True, index=True)
-    editor = Column(String)
-    date_time = Column(DateTime)
-    reason = Column(String)
-    owner_id = Column(Integer, ForeignKey("jams.id"))
-
-    owner = relationship("Jam", back_populates="edits")

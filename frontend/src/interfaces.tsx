@@ -1,6 +1,7 @@
 import React from "react";
 
 export interface Data {
+  id?: string;
   name: string;
   sun?: boolean;
   mon?: boolean;
@@ -11,19 +12,8 @@ export interface Data {
   sat?: boolean;
   custom?: string;
   start_time: string;
-  end_time: string | undefined;
+  end_time: undefined | string;
   location: string;
-  info: string;
-  website: string;
-}
-
-export interface NewData {
-  id?: number;
-  name: string;
-  days: string;
-  start_time: string;
-  end_time: string | null;
-  location: string;
-  info: string;
-  website: string;
+  information?: string;
+  website?: string;
 }

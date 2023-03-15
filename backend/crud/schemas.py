@@ -4,31 +4,23 @@ from pydantic import BaseModel, Field
 import datetime
 import random
 
-class EditBase(BaseModel):
-    reason: Union[str, None] = None
-    editor: str
-    date_time: datetime.datetime
-
-class EditCreate(EditBase):
-    pass
-
-class Edit(EditBase):
-    id: int
-    owner_id: int
-
-    class Config:
-        orm_mode = True
-
 
 class JamBase(BaseModel):
     name: str
-    days: str
+    sun: bool
+    mon: bool
+    tue: bool
+    wed: bool
+    thu: bool
+    fri: bool
+    sat: bool
+    custom: str
     start_time: datetime.time
     end_time: Union[datetime.time, None] = None
     location: str
-    info: Union[str, None] = None
+    information: Union[str, None] = None
     website: Union[str, None] = None
-    edits: List[Edit] = []
+    edit_reason: Union[str, None] = None
 
 class JamCreate(JamBase):
     pass

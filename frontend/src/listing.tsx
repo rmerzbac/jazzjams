@@ -6,10 +6,10 @@ import {
   Link,
   useNavigate
 } from "react-router-dom";
-import {Data, NewData} from "./interfaces";
+import { Data } from "./interfaces";
 
 export default function Listing() {
-  const [data, setData] = useState<NewData[]>([]);
+  const [data, setData] = useState<Data[]>([]);
 
   const handleFetch = async () => {
     try {
@@ -48,6 +48,21 @@ export default function Listing() {
     return date;
   }
 
+  const transformDate = (data: Data) => {
+    let days = "";
+    if (data.sun) days += "Sun";
+    if (data.mon) days += "Mon";
+    if (data.tue) days += "Tue";
+    if (data.wed) days += "Wed";
+    if (data.thu) days += "Thu";
+    if (data.fri) days += "Fri";
+    if (data.sat) days += "Sat";
+    if (data.custom && days !== "") days += ", ";
+    if (data.custom) days += data.custom;
+
+    return days;
+  };
+
   return (
     <div>
       <div className="button"><Link to="/create">ADD NEW SESSION</Link></div>
@@ -55,11 +70,11 @@ export default function Listing() {
         {data.map((item, index) => (
           <li key={index}>
             <h4 className="session-name">{item.name} <Link to={`/edit/${item.id}`}><i className='fa fa-edit'></i></Link></h4>
-            <p>{item.days}</p>
+            <p>{transformDate(item) == '' ? '' : 'Days: ' + transformDate(item)}</p>
             <p>Time: {parseTime(item.start_time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + (item.end_time ? " - " + parseTime(item.end_time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '')}</p>
-            <p>{item.location}</p>
-            <p>{item.info ? item.info : ''}</p>
-            <p>{item.website ? item.website : ''}</p>
+            <p>{item.location ? 'Location: ' + item.location : ''}</p>
+            <p>{item.information ? 'Information: ' + item.information : ''}</p>
+            <p>{item.website ? 'Website: ' : ''}<a href={item.website} target="_blank">{item.website ? item.website : ''}</a></p>
             <iframe
               width="400"
               height="225"

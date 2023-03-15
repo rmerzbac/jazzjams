@@ -7,7 +7,7 @@ import {
   useNavigate
 } from "react-router-dom";
 
-import {Data, NewData} from './interfaces';
+import { Data } from './interfaces';
 
 export default function CreationForm() {
   const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ export default function CreationForm() {
     start_time: '',
     end_time: undefined,
     location: '',
-    info: '',
+    information: '',
     website: ''
   });
 
@@ -37,32 +37,6 @@ export default function CreationForm() {
     }
   };
 
-  const transformData = (data: Data) => {
-    let days = "";
-    if (data.sun) days += "Sun";
-    if (data.mon) days += "Mon";
-    if (data.tue) days += "Tue";
-    if (data.wed) days += "Wed";
-    if (data.thu) days += "Thu";
-    if (data.fri) days += "Fri";
-    if (data.sat) days += "Sat";
-    if (data.custom) days += ", " + data.custom;
-
-    const newData: NewData = {
-      name: data.name,
-      days: days,
-      start_time: data.start_time,
-      end_time: data.end_time || null,
-      location: data.location,
-      info: data.info,
-      website: data.website,
-    };
-
-    console.log(newData.end_time);
-
-    return newData;
-  };
-
   const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -74,10 +48,8 @@ export default function CreationForm() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(transformData(formData))
+        body: JSON.stringify(formData)
       });
-
-      console.log(JSON.stringify(transformData(formData)));
 
       if (!response.ok) {
         const data = await response.json();
@@ -144,11 +116,11 @@ export default function CreationForm() {
         <label htmlFor="location">Location:</label>
         <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required /><br/>
 
-        <label htmlFor="info">Information:</label>
-        <input type="text" id="info" name="info" /><br/>
+        <label htmlFor="information">Information:</label>
+        <input type="text" id="information" name="information" value={formData.information} onChange={handleChange} /><br/>
 
         <label htmlFor="website">Website:</label>
-        <input type="text" id="website" name="website" /><br/>
+        <input type="text" id="website" name="website" value={formData.website} onChange={handleChange} /><br/>
 
         <input type="submit" />
         <p id="error"></p>

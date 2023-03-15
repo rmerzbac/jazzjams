@@ -1,4 +1,5 @@
 from typing import List
+import datetime
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -38,46 +39,35 @@ def get_db():
 
 @app.post("/jams/", response_model=schemas.Jam)
 def create_jam(jam: schemas.JamCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_jam_by_name(db, name=jam.name)
-    if db_user and db_user.is_active == True:
+    db_jam = crud.get_jam_by_name(db, name=jam.name)
+    if db_jam and db_jam.is_active == True:
         raise HTTPException(status_code=400, detail="A jam has already been created with this name")
     return crud.create_jam(db=db, jam=jam)
 
 
 @app.get("/jams/", response_model=List[schemas.Jam])
 def read_jams(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = crud.get_jams(db, skip=skip, limit=limit)
-    return users
+    jams = crud.get_jams(db, skip=skip, limit=limit)
+    return jams
 
 
 @app.get("/jams/{jam_id}", response_model=schemas.Jam)
-def read_jam(jam_id: int, db: Session = Depends(get_db)):
+def read_jam(jam_id: str, db: Session = Depends(get_db)):
     db_jam = crud.get_jam(db, jam_id=jam_id)
     if db_jam is None:
         raise HTTPException(status_code=404, detail="Jam not found")
     return db_jam
 
-
-@app.post("/jams/{jam_id}/edits/", response_model=schemas.Edit)
-def create_edit(
-    user_id: int, edit: schemas.EditCreate, db: Session = Depends(get_db)
-):
-    return crud.create_jam_edit(db=db, edit=edit, jam_id=jam_id)
-
-
-@app.get("/edits/", response_model=List[schemas.Edit])
-def read_edits(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    edits = crud.get_edits(db, skip=skip, limit=limit)
-    return edits
-
-@app.get("/edits/{owner_id}", response_model=List[schemas.Edit])
-def read_edits_by_jam(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    edits = crud.get_edits_by_jam(db, owner_id)
-    return edits
+@app.put("/jams/{jam_id}", response_model=schemas.Jam)
+def edit_jam(jam: schemas.JamCreate, jam_id: str, reason: str, db: Session = Depends(get_db)):
+    db_jam = crud.edit_jam(db, jam, id=jam_id, reason="EDIT " + datetime.datetime.now().strftime("%I:%M%p %B %d, %Y: ") + reason)
+    if db_jam is None:
+        raise HTTPException(status_code=404, detail="Jam not found")
+    return db_jam
 
 @app.delete("/jams/{jam_id}", response_model=schemas.Jam)
-def delete_jam(jam_id: str, db: Session = Depends(get_db)):
-    db_jam = crud.delete_jam(db, jam_id=jam_id)
+def delete_jam(jam_id: str, reason: str, db: Session = Depends(get_db)):
+    db_jam = crud.delete_jam(db, jam_id=jam_id, reason="DELETE " + datetime.datetime.now().strftime("%I:%M%p %B %d, %Y: ") + reason)
     if db_jam is None:
         raise HTTPException(status_code=404, detail="Jam not found")
     return db_jam
