@@ -21,6 +21,8 @@ origins = [
     "http://localhost:8000",
     "https://jazzjams.vercel.app",
     "https://jazzjams.vercel.app/*",
+    "https://jazzjams.vercel.app/jams",
+    "https://jazzjams.vercel.app/create"
 ]
 
 app.add_middleware(
