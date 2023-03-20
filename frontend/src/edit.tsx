@@ -22,7 +22,7 @@ export default function EditForm() {
 
   const handleFetch = async () => {
     try {
-      const response = await fetch(`/jams/${id}`, {
+      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ export default function EditForm() {
     //data!.end_time = data?.end_time == "" ? undefined : data?.end_time;
 
     try {
-      const response = await fetch(`/jams/${id}?reason=${encodeURIComponent(formData.reason)}`, {
+      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}?reason=${encodeURIComponent(formData.reason)}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
