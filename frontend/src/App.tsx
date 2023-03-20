@@ -12,17 +12,13 @@ import Listing from './listing';
 import Edit from './edit';
 import Delete from './delete';
 
-function makeAlert() {
-  alert("sadfsdf");
-}
-
 
 export default function App() {
   return (
     <Router>
       <div>
         <div className="App">
-          <h2>NYC JAZZ JAMS<button onClick={makeAlert}></button></h2>
+          <h2>NYC JAZZ JAMS</h2>
         </div>
 
         <Routes>
