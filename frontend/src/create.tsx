@@ -43,7 +43,7 @@ export default function CreationForm() {
     event.preventDefault();
 
     try {
-      const response = await fetch(process.env.REACT_APP_DOMAIN + 'jams', {
+      const response = await fetch(process.env.REACT_APP_DOMAIN + 'jams/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

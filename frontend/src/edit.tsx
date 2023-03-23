@@ -148,7 +148,7 @@ export default function EditForm() {
     <div>
       <div className="button"><Link to="/">BACK TO LISTINGS</Link></div>
       <form onSubmit={handleSubmit}>
-        <h4>Edit "{data ? data.name : ''}" <Link to={`/delete/${useParams().id}`}><i className='fa fa-trash-o'></i></Link></h4>
+        <h4>Edit "{data ? data.name : ''}" <Link to={`/delete/${useParams().id}/`}><i className='fa fa-trash-o'></i></Link></h4>
         <label htmlFor="name">Session name:</label>
         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required /><br />
 

@@ -13,7 +13,7 @@ export default function Listing() {
 
   const handleFetch = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_DOMAIN + 'jams', {
+      const response = await fetch(process.env.REACT_APP_DOMAIN + 'jams/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

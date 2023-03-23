@@ -22,7 +22,7 @@ export default function DeletionForm() {
 
   const handleFetch = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}`, {
+      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ export default function DeletionForm() {
     event.preventDefault();
 
     try {
-      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}?reason=${encodeURIComponent(formData.reason)}`, {
+      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}?reason=${encodeURIComponent(formData.reason)}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

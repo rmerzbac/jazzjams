@@ -21,8 +21,14 @@ origins = [
     "http://localhost:8000",
     "https://jazzjams.vercel.app",
     "https://jazzjams.vercel.app/*",
-    "https://jazzjams.vercel.app/jams",
-    "https://jazzjams.vercel.app/create"
+    "http://JazzJamsLB032323-1615814258.us-east-2.elb.amazonaws.com",
+    "http://JazzJamsLB032323-1615814258.us-east-2.elb.amazonaws.com/*",
+    "https://JazzJamsLB032323-1615814258.us-east-2.elb.amazonaws.com",
+    "https://JazzJamsLB032323-1615814258.us-east-2.elb.amazonaws.com/*",
+    "http://jazzjamsapi.reidmerzbacher.com/",
+    "http://jazzjamsapi.reidmerzbacher.com/*",
+    "https://jazzjamsapi.reidmerzbacher.com/",
+    "https://jazzjamsapi.reidmerzbacher.com/*",
 ]
 
 app.add_middleware(
