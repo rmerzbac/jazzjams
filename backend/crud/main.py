@@ -29,6 +29,10 @@ origins = [
     "http://jazzjamsapi.reidmerzbacher.com/*",
     "https://jazzjamsapi.reidmerzbacher.com/",
     "https://jazzjamsapi.reidmerzbacher.com/*",
+    "https://jazzjams.reidmerzbacher.com",
+    "https://jazzjams.reidmerzbacher.com/*",
+    "http://jazzjams.reidmerzbacher.com",
+    "http://jazzjams.reidmerzbacher.com/*",
 ]
 
 app.add_middleware(

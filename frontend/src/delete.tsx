@@ -105,7 +105,12 @@ export default function DeletionForm() {
 
   return (
     <div>
-      <div className="button"><Link to="/">BACK TO LISTINGS</Link></div>
+      <div className="button">
+        <Link to="/">
+          <span className="button-text">BACK TO LISTINGS</span>
+          <span className="button-back-arrow">←</span>
+        </Link>
+      </div>
       <form onSubmit={handleSubmit}>
         <h4>Delete "{data ? data.name : ''}"</h4>
         <label htmlFor="reason">Reason for deletion:</label>

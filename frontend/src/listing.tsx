@@ -65,7 +65,12 @@ export default function Listing() {
 
   return (
     <div>
-      <div className="button"><Link to="/create">ADD NEW SESSION</Link></div>
+      <div className="button">
+        <Link to="/create">
+          <span className="button-text">ADD NEW SESSION</span>
+          <span className="button-add">+</span>
+        </Link>
+      </div>
       <ul>
         {data.map((item, index) => (
           <li key={index}>
@@ -76,8 +81,6 @@ export default function Listing() {
             <p>{item.information ? 'Information: ' + item.information : ''}</p>
             <p>{item.website ? 'Website: ' : ''}<a href={item.website} target="_blank">{item.website ? item.website : ''}</a></p>
             <iframe
-              width="400"
-              height="225"
               style={{border:0}}
               loading="lazy"
               allowFullScreen

@@ -1,11 +1,54 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  margin: 0;
-  padding-left: 50px;
-  padding-right: 50px;
+  margin: 0 auto;
+  width: 50%;
   font-weight: 200;
   font-size: 16px;
   line-height: 1.5;
+}
+
+.button {
+  position: absolute;
+  top: 10px;
+  right: 25%;
+}
+
+.button-text {
+  display: inline;
+}
+
+.button-back-arrow {
+  display: none;
+  /* Add styles for the back arrow here, for example, using a Unicode arrow: */
+  content: '←';
+}
+
+.button-add {
+  display: none;
+  /* Add styles for the back arrow here, for example, using a Unicode arrow: */
+  content: '+';
+}
+
+@media (max-width: 500px) {
+  .button-text {
+    display: none;
+  }
+  .button-back-arrow {
+    display: inline;
+  }
+  .button-add {
+    display: inline;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  body {
+    width: 90%;
+  }
+
+  .button {
+    right: 5%;
+  }
 }
 
 h4 {
@@ -23,6 +66,13 @@ iframe {
   padding: 0;
   margin: 0;
   margin-top: 10px;
+  width: 400;
+  height: 225;
+}
+@media screen and (max-width: 600px) {
+  iframe {
+    width: 100%;
+  }
 }
 
 input {
@@ -39,12 +89,6 @@ li {
   padding: 30px;
   margin-top: 10px;
   border-radius: 10px;
-}
-
-.button {
-  position: absolute;
-  top: 10px;
-  right: 50px;
 }
 
 .button a:link, a:visited {
