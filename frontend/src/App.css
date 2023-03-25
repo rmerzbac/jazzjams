@@ -15,18 +15,23 @@ body {
 
 .button-text {
   display: inline;
+  font-weight: 200;
 }
 
 .button-back-arrow {
   display: none;
   /* Add styles for the back arrow here, for example, using a Unicode arrow: */
   content: '←';
+  font-size: 30px;
+  line-height: 1;
 }
 
 .button-add {
   display: none;
   /* Add styles for the back arrow here, for example, using a Unicode arrow: */
   content: '+';
+  font-size: 30px;
+  line-height: 1;
 }
 
 @media (max-width: 500px) {
@@ -113,4 +118,19 @@ li {
 
 .session-name {
   font-weight: bold;
+}
+
+.footer {
+  position: fixed;
+  font-size: 12px;
+  left: 5px;
+  bottom: 0;
+  background-color: white;
+}
+
+@media screen and (max-width: 500px) {
+  .footer {
+    font-size: 11px;
+    width: 100%;
+  }
 }

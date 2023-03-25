@@ -33,6 +33,8 @@ export default function App() {
           <Route path="/delete/:id" element={<Delete />}>
           </Route>
         </Routes>
+
+        <div className="footer">Contact rmerzbacher@gmail.com to report a bug or to request a feature.</div>
       </div>
     </Router>
   );
