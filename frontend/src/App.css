@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -132,7 +132,7 @@ li {
 
 @media screen and (max-width: 500px) {
   .footer {
-    font-size: 11px;
+    font-size: 10px;
     width: 100%;
   }
 }
