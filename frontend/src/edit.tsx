@@ -9,43 +9,12 @@ import {
 } from "react-router-dom";
 
 import { Data } from './interfaces';
+import { useDataFetch } from './fetch';
 
 export default function EditForm() {
   const navigate = useNavigate();
   const id = useParams().id;
-
-  const [data, setData] = useState<Data>();
-
-  useEffect(() => {
-    handleFetch();
-  }, []);
-
-  const handleFetch = async () => {
-    try {
-      const response = await fetch(process.env.REACT_APP_DOMAIN + `jams/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        console.error(data);
-        alert("Jam not found");
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const jsonData = await response.json();
-      console.log(jsonData);
-      setData(jsonData);
-
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-      navigate("/");
-    }
-  };
+  const data = useDataFetch(id ?? '');
 
   useEffect(() => {
     setFormData({

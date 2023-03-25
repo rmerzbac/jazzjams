@@ -7,6 +7,7 @@ import {
   useNavigate
 } from "react-router-dom";
 import { Data } from "./interfaces";
+import { useDataFetch } from './fetch';
 
 export default function Listing() {
   const [data, setData] = useState<Data[]>([]);
