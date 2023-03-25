@@ -23,10 +23,8 @@ export const useDataFetch = (id: string) => {
       }
 
       const jsonData = await response.json();
-      console.log(jsonData);
       setData(jsonData);
 
-      console.log(data);
     } catch (error) {
       console.error(error);
       navigate("/");
